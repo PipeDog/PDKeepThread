@@ -9,7 +9,7 @@
 #import "PDKeepThread.h"
 
 NSString *const PDKeepThreadDefaultName = nil;
-NSUInteger const PDKeepThreadDefaultStackSize = 1 << 19; // 512KB | 524288 bit
+NSUInteger const PDKeepThreadDefaultStackSize = 1 << 19; // 512 KB | 524288 Bytes
 NSQualityOfService const PDKeepThreadDefaultQualityOfService = NSQualityOfServiceDefault;
 
 @interface PDThreadLaunchAction : NSObject
