@@ -17,6 +17,7 @@ FOUNDATION_EXPORT NSQualityOfService const PDKeepThreadDefaultQualityOfService;
 @interface PDKeepThread : NSObject
 
 @property (nonatomic, strong, readonly) NSMutableDictionary *threadDictionary;
+@property (nonatomic, assign, readonly, getter=isRunning) BOOL running;
 
 // Set these properties before starting the thread if needed.
 @property (nonatomic, copy, nullable) NSString *name;

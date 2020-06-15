@@ -53,6 +53,7 @@ NSQualityOfService const PDKeepThreadDefaultQualityOfService = NSQualityOfServic
         _name = [name copy];
         _stackSize = stackSize;
         _qualityOfService = qualityOfService;
+        _running = NO;
     }
     return self;
 }
@@ -63,12 +64,13 @@ NSQualityOfService const PDKeepThreadDefaultQualityOfService = NSQualityOfServic
 }
 
 - (void)executeTaskWithBlock:(void (^)(void))block waitUntilDone:(BOOL)wait {
-    if (!_thread) { return; }
+    if (!self.isRunning) { return; }
     [self performSelector:@selector(_executeTaskWithBlock:) onThread:_thread withObject:block waitUntilDone:wait];
 }
 
 - (void)start {
-    if (_thread) { return; }
+    if (self.isRunning) { return; }
+    _running = YES;
     
     PDThreadLaunchAction *action = [PDThreadLaunchAction new];
     _thread = [[NSThread alloc] initWithTarget:action selector:@selector(run:) object:nil];
@@ -79,7 +81,9 @@ NSQualityOfService const PDKeepThreadDefaultQualityOfService = NSQualityOfServic
 }
 
 - (void)stop {
-    if (!_thread) { return; }
+    if (!self.isRunning) { return; }
+    _running = NO;
+    
     [self performSelector:@selector(_stop) onThread:_thread withObject:nil waitUntilDone:YES];
 }
 
